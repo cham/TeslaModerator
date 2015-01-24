@@ -3,26 +3,18 @@
 var authentication = require('../src/api/authentication');
 var index = {};
 
-index.get = function(req, res){
-    res.sendStatus(200);
-};
-
-function login(req, res){
-    authentication.login(req, {
-        username: req.body.username,
-        password: req.body.password
-    }, function(err){
-        if(err){
-            res.status(401);
-            return res.send(err.message);
-        }
-
-        res.sendStatus(200);
-    });
+function requireAuthentication(req, res, next){
+    if(authentication.isAuthenticated(req)){
+        return next();
+    }
+    res.redirect('/login');
 }
+
+index.get = function(req, res){
+    res.end();
+};
 
 module.exports = function(router){
     router
-        .get('/', index.get)
-        .post('/login', login);
+        .get('/', requireAuthentication, index.get);
 };
