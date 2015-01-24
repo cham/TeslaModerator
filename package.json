@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "express": "4.11.1",
+    "express-session": "1.10.1",
     "hogan-express": "0.5.2",
     "q": "1.1.2",
     "redis": "0.12.1",
