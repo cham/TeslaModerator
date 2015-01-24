@@ -3,7 +3,7 @@ a small app that allows basic moderation of Tesla forums
 
 Features
 --------
-- [ ] login restricted to whitelist passed at app initialisation
+- [x] login restricted to whitelist passed at app initialisation
 - [ ] switch registrations on and off
 - [ ] ban users
 - [ ] change passwords
