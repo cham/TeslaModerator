@@ -20,3 +20,6 @@ exports.getClient = function(callback){
         callback(client);
     });
 };
+exports.ready = function(callback){
+    deferred.promise.then(callback);
+};
