@@ -9,6 +9,7 @@
     "start": "node moderator-app"
   },
   "dependencies": {
+    "body-parser": "1.10.2",
     "connect-redis": "2.1.0",
     "express": "4.11.1",
     "express-session": "1.10.1",
