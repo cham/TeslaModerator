@@ -9,7 +9,7 @@
     "start": "node moderator"
   },
   "dependencies": {
+    "express": "4.11.1"
   },
-  "devDependencies": {
-  }
+  "devDependencies": {}
 }
