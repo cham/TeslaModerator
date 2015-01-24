@@ -11,10 +11,13 @@
   "dependencies": {
     "express": "4.11.1",
     "hogan-express": "0.5.2",
+    "q": "1.1.2",
     "redis": "0.12.1",
     "routemaster": "0.2.1"
   },
   "devDependencies": {
-    "mocha": "2.1.0"
+    "expectations": "0.3.0",
+    "mocha": "2.1.0",
+    "sandboxed-module": "2.0.0"
   }
 }
