@@ -48,5 +48,10 @@ function login(req, options, callback){
     });
 }
 
+function logout(req){
+    req.session.authenticated = false;
+}
+
 exports.isAuthenticated = isAuthenticated;
+exports.logout = logout;
 exports.login = login;
