@@ -52,6 +52,10 @@ describe('redisclient', function(){
         });
     });
 
+    afterEach(function(){
+        sandbox.restore();
+    });
+
     describe('module initialisation', function(){
         it('creates a new redis client', function(){
             expect(fakeRedis.createClient.calledOnce).toEqual(true);
