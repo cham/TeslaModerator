@@ -129,4 +129,31 @@ describe('redisclient', function(){
         });
     });
 
+    describe('ready', function(){
+        var callback;
+
+        beforeEach(function(){
+            callback = sandbox.stub();
+            redisclient.ready(callback);
+        });
+
+        it('adds a function to the promise via promise.then', function(){
+            expect(thenStub.calledOnce).toEqual(true);
+        });
+
+        describe('when the promise is resolved', function(){
+            beforeEach(function(){
+                thenStub.yield();
+            });
+
+            it('executes the callback', function(){
+                expect(callback.calledOnce).toEqual(true);
+            });
+
+            it('passes no arguments to the callback', function(){
+                expect(callback.args[0].length).toEqual(0);
+            });
+        });
+    });
+
 });
