@@ -6,7 +6,7 @@
     "node": "0.10.33"
   },
   "scripts": {
-    "start": "node moderator"
+    "start": "node moderator-app"
   },
   "dependencies": {
     "express": "4.11.1",
