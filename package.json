@@ -6,7 +6,7 @@
     "node": "0.10.33"
   },
   "scripts": {
-    "start": "node moderator-app"
+    "start": "node moderator-app.js --moderators=cham,nicko"
   },
   "dependencies": {
     "body-parser": "1.10.2",
