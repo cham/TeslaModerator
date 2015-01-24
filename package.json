@@ -16,7 +16,8 @@
     "q": "1.1.2",
     "redis": "0.12.1",
     "request": "2.51.0",
-    "routemaster": "0.2.1"
+    "routemaster": "0.2.1",
+    "yargs": "1.3.3"
   },
   "devDependencies": {
     "expectations": "0.3.0",
