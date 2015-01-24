@@ -56,11 +56,14 @@ function makeRequest(options, callback){
             return;
         }
 
-        parseJson(json, function(data){
-            if(callback){
-                callback(null, data);
-            }
-        });
+        if(typeof json === 'string'){
+            return parseJson(json, function(data){
+                if(callback){
+                    callback(null, data);
+                }
+            });
+        }
+        callback(null, json);
     });
 }
 
