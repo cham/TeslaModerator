@@ -6,6 +6,7 @@ var http = require('http');
 var session = require('express-session');
 var RedisStore = require('connect-redis')(session);
 var redisclient = require('./src/redisclient');
+var bodyParser = require('body-parser');
 
 var port = 3030;
 var app = express();
@@ -25,8 +26,10 @@ redisclient.ready(function(){
         saveUninitialized: true
     }));
 
+    app.use(bodyParser.urlencoded({extended: false}));
+
     app.use(routemaster({
-        directory: 'routes',
+        directory: './routes',
         Router: express.Router
     }));
 
