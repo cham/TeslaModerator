@@ -7,11 +7,11 @@ function requireAuthentication(req, res, next){
     if(authentication.isAuthenticated(req)){
         return next();
     }
-    res.redirect('/login');
+    res.render('login');
 }
 
 index.get = function(req, res){
-    res.end();
+    res.render('index');
 };
 
 module.exports = function(router){

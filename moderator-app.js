@@ -13,6 +13,9 @@ var app = express();
 var server = http.createServer(app);
 
 redisclient.ready(function(){
+    app.set('view engine', 'template');
+    app.engine('template', require('hogan-express'));
+
     app.use(session({
         name: 'tesla-moderator-session',
         store: new RedisStore({
