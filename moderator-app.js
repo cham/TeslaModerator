@@ -31,10 +31,14 @@ redisclient.ready(function(){
 
     app.use(bodyParser.urlencoded({extended: false}));
 
-    app.use(routemaster({
-        directory: './routes',
-        Router: express.Router
-    }));
+    try{
+        app.use(routemaster({
+            directory: './routes',
+            Router: express.Router
+        }));
+    }catch(e){
+        console.error(e);
+    }
 
     server.listen(port);
     console.log('moderator-app listening on port', port);
