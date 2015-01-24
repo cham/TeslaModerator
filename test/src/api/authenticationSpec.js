@@ -202,4 +202,14 @@ describe('authentication', function(){
             });
         });
     });
+
+    describe('logout', function(){
+        beforeEach(function(){
+            authentication.logout(req);
+        });
+
+        it('sets authenticated to false on req.session', function(){
+            expect(req.session.authenticated).toEqual(false);
+        });
+    });
 });
