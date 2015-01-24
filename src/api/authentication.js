@@ -2,11 +2,12 @@
 
 var apiRequest = require('./apiRequest');
 var argv = require('yargs').argv;
-var whitelistedUsers = (argv.moderators || '').split(',');
 
-if(!whitelistedUsers){
+if(!argv.moderators){
     throw new Error('moderators command line option is required');
 }
+
+var whitelistedUsers = (argv.moderators || '').split(',');
 
 function isAuthenticated(req){
     if(!req || !req.session || typeof req.session !== 'object'){
