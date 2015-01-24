@@ -1,7 +1,6 @@
 'use strict';
 
 var SandboxedModule = require('sandboxed-module');
-var apiRequest = require('../../../src/api/apiRequest');
 var sinon = require('sinon');
 var authentication;
 
