@@ -49,6 +49,8 @@ function requiredOptions(options){
 function makeRequest(options, callback){
     requiredOptions(options || {});
 
+    options.url = 'http://localhost:3100' + options.url;
+
     request(options, function(err, response, json){
         if(!checkResponse(err, response, callback)){
             return;
