@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "express": "4.11.1",
+    "redis": "0.12.1",
     "routemaster": "0.2.1"
   },
   "devDependencies": {
