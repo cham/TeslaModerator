@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Tesla Moderation</title>
+  <style>
+    table {
+      border: 1px solid #999;
+      font-size: 13px;
+    }
+    th {
+      background: #ccc;
+    }
+    td {
+      border: 1px solid #666;
+    }
+    input[type=text] {
+      width: 200px;
+    }
+    input[type=number] {
+      width: 100px;
+    }
+    a {
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h1>Tesla Moderation</h1>
+  <form action="/users" method="get">
+    <p>
+      <label>Username starts with:</label>
+      <input type="text" name="startswith" value="{{startswith}}">
+      <button type="submit">Search</button>
+    </p>
+  </form>
+  <table>
+    <tr>
+      <th>Username</th>
+      <th>Email</th>
+      <th>Last IP</th>
+      <th>Banned</th>
+      <th>Points</th>
+      <th></th>
+    </tr>
+{{#users}}
+    <form action="/user" method="post">
+      <input type="hidden" name="username" value="{{username}}">
+      <tr>
+        <td>{{username}}</td>
+        <td><input type="text" name="email" value="{{email}}"></td>
+        <td>{{last_ip}}</td>
+        <td><input type="checkbox" name="banned" {{#banned}}checked{{/banned}}></td>
+        <td><input type="number" name="points" value="{{points}}"></td>
+        <td><button type="submit">Update</button></td>
+      </tr>
+    </form>
+{{/users}}
+  </table>
+</body>
+</html>
