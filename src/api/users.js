@@ -1,5 +1,6 @@
 'use strict';
 
+var async = require('async');
 var apiRequest = require('./apiRequest');
 
 function requiredChangePasswordOptions(options){
@@ -44,5 +45,46 @@ function getUsers(query, sort, callback){
     }, callback);
 }
 
+function editUser(username, details, callback){
+    var urlname = encodeURIComponent(username.toLowerCase());
+    var callsToMake = [];
+
+    callsToMake.push(function(done){
+        apiRequest.makeRequest({
+            form: {
+                email: details.email
+            },
+            method: 'put',
+            url: '/user/' + urlname + '/changeemail'
+        }, function(err){
+            done(err);
+        });
+    });
+
+    callsToMake.push(function(done){
+        apiRequest.makeRequest({
+            method: 'put',
+            url: '/user/' + urlname + '/' + (details.banned ? 'ban' : 'unban')
+        }, function(err){
+            done(err);
+        });
+    });
+
+    callsToMake.push(function(done){
+        apiRequest.makeRequest({
+            form: {
+                points: details.points
+            },
+            method: 'put',
+            url: '/user/' + urlname + '/points'
+        }, function(err){
+            done(err);
+        });
+    });
+
+    async.parallel(callsToMake, callback);
+}
+
 exports.changePassword = changePassword;
 exports.getUsers = getUsers;
+exports.editUser = editUser;
