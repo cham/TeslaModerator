@@ -5,11 +5,11 @@ Features
 --------
 - [x] login restricted to whitelist passed at app initialisation
 - [ ] switch registrations on and off
-- [ ] ban users
+- [x] ban users
 - [x] change passwords
 - [ ] close threads
 - [ ] delete threads
 - [ ] edit posts
-- [ ] edit user details
-- [ ] search users
+- [x] edit user details
+- [x] search users
 
