@@ -2,7 +2,7 @@
 
 var apiRequest = require('./apiRequest');
 
-function requiredLoginOptions(options){
+function requiredChangePasswordOptions(options){
     if(!options.username){
         throw new Error('username is required');
     }
@@ -12,7 +12,7 @@ function requiredLoginOptions(options){
 }
 
 function changePassword(options, callback){
-    requiredLoginOptions(options || {});
+    requiredChangePasswordOptions(options || {});
 
     var urlname = encodeURIComponent(options.username.toLowerCase());
 
