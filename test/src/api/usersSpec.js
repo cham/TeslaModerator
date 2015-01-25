@@ -181,7 +181,7 @@ describe('users', function(){
                 expect(makeRequestOptions.method).toEqual('get');
             });
 
-            it('passes the method url as "/users', function(){
+            it('passes the method url as "/users"', function(){
                 expect(makeRequestOptions.url).toEqual('/users');
             });
 
@@ -253,6 +253,177 @@ describe('users', function(){
                     });
                 });
             });
+        });
+    });
+
+    describe('editUser', function(){
+        var callback;
+        var username;
+        var newDetails;
+
+        beforeEach(function(){
+            username = 'cham';
+            newDetails = {
+                email: 'foo@bar.com',
+                banned: true,
+                points: 123
+            };
+            callback = sandbox.stub();
+        });
+
+        describe('with email, banned and points parameters', function(){
+            beforeEach(function(){
+                users.editUser(username, newDetails, callback);
+            });
+
+            it('calls apiRequest.makeRequest three times', function(){
+                expect(makeRequestStub.calledThrice).toEqual(true);
+            });
+
+            describe('the change email call', function(){
+                var makeRequestOptions;
+
+                beforeEach(function(){
+                    makeRequestOptions = makeRequestStub.args[0][0];
+                });
+
+                it('passes an options hash to makeRequest as the first argument', function(){
+                    expect(typeof makeRequestOptions).toEqual('object');
+                });
+
+                it('passes the method option as put', function(){
+                    expect(makeRequestOptions.method).toEqual('put');
+                });
+
+                it('passes the method url as "/user/:username/changeemail"', function(){
+                    expect(makeRequestOptions.url).toEqual('/user/cham/changeemail');
+                });
+
+                describe('the form parameter', function(){
+                    var form;
+
+                    beforeEach(function(){
+                        form = makeRequestOptions.form;
+                    });
+
+                    it('passes the form a hash named "form"', function(){
+                        expect(typeof form).toEqual('object');
+                    });
+
+                    it('passes the email in the form hash', function(){
+                        expect(form.email).toEqual('foo@bar.com');
+                    });
+                });
+
+                describe('the callback', function(){
+                    it('passes a callback to makeRequest as the second argument', function(){
+                        expect(typeof makeRequestStub.args[0][1]).toEqual('function');
+                    });
+                });
+            });
+
+            describe('the banned call', function(){
+                var makeRequestOptions;
+
+                beforeEach(function(){
+                    makeRequestOptions = makeRequestStub.args[1][0];
+                });
+
+                it('passes an options hash to makeRequest as the first argument', function(){
+                    expect(typeof makeRequestOptions).toEqual('object');
+                });
+
+                it('passes the method option as put', function(){
+                    expect(makeRequestOptions.method).toEqual('put');
+                });
+
+                it('passes the method url as "/user/:username/ban"', function(){
+                    expect(makeRequestOptions.url).toEqual('/user/cham/ban');
+                });
+
+                describe('the callback', function(){
+                    it('passes a callback to makeRequest as the second argument', function(){
+                        expect(typeof makeRequestStub.args[0][1]).toEqual('function');
+                    });
+                });
+            });
+
+            describe('the points call', function(){
+                var makeRequestOptions;
+
+                beforeEach(function(){
+                    makeRequestOptions = makeRequestStub.args[2][0];
+                });
+
+                it('passes an options hash to makeRequest as the first argument', function(){
+                    expect(typeof makeRequestOptions).toEqual('object');
+                });
+
+                it('passes the method option as put', function(){
+                    expect(makeRequestOptions.method).toEqual('put');
+                });
+
+                it('passes the method url as "/user/:username/points"', function(){
+                    expect(makeRequestOptions.url).toEqual('/user/cham/points');
+                });
+
+                describe('the form parameter', function(){
+                    var form;
+
+                    beforeEach(function(){
+                        form = makeRequestOptions.form;
+                    });
+
+                    it('passes the form a hash named "form"', function(){
+                        expect(typeof form).toEqual('object');
+                    });
+
+                    it('passes the number of points in the form hash as "points"', function(){
+                        expect(form.points).toEqual(123);
+                    });
+                });
+
+                describe('the callback', function(){
+                    it('passes a callback to makeRequest as the second argument', function(){
+                        expect(typeof makeRequestStub.args[0][1]).toEqual('function');
+                    });
+                });
+            });
+
+            describe('when all three makeRequest calls have resolved', function(){
+                describe('with no errors', function(){
+                    beforeEach(function(){
+                        makeRequestStub.args[0][1]();
+                        makeRequestStub.args[1][1]();
+                        makeRequestStub.args[2][1]();
+                    });
+
+                    it('executes the callback', function(){
+                        expect(callback.calledOnce).toEqual(true);
+                    });
+
+                    it('passes no errors to the callback', function(){
+                        expect(callback.args[0][0]).toBeFalsey();
+                    });
+                });
+
+                describe('with any error', function(){
+                    beforeEach(function(){
+                        makeRequestStub.args[0][1]();
+                        makeRequestStub.args[1][1](new Error('error!'));
+                        makeRequestStub.args[2][1]();
+                    });
+
+                    it('executes the callback', function(){
+                        expect(callback.calledOnce).toEqual(true);
+                    });
+
+                    it('passes the error to the callback', function(){
+                        expect(callback.args[0][0] instanceof Error).toEqual(true);
+                        expect(callback.args[0][0].message).toEqual('error!');
+                    });
+                });
+            })
         });
     });
 
