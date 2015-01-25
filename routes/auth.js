@@ -12,12 +12,12 @@ function login(req, res){
             return res.send(err.message);
         }
 
-        res.sendStatus(200);
+        res.redirect('/');
     });
 }
 
 function logout(req, res){
-    authentication.logout();
+    authentication.logout(req);
     res.redirect('/');
 }
 
