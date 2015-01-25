@@ -25,4 +25,24 @@ function changePassword(options, callback){
     }, callback);
 }
 
+function getUsers(query, sort, callback){
+    var queryString = {};
+    var queryOptions = query || {};
+    
+    Object.keys(queryOptions).forEach(function(key){
+        queryString[key] = queryOptions[key];
+    });
+
+    if(sort){
+        queryString.sortBy = sort;
+    }
+
+    apiRequest.makeRequest({
+        method: 'get',
+        url: '/users',
+        qs: queryString
+    }, callback);
+}
+
 exports.changePassword = changePassword;
+exports.getUsers = getUsers;
