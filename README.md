@@ -6,7 +6,7 @@ Features
 - [x] login restricted to whitelist passed at app initialisation
 - [ ] switch registrations on and off
 - [ ] ban users
-- [ ] change passwords
+- [x] change passwords
 - [ ] close threads
 - [ ] delete threads
 - [ ] edit posts
