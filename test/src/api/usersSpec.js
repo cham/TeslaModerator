@@ -147,4 +147,113 @@ describe('users', function(){
         });
     });
 
+    describe('getUsers', function(){
+        var callback;
+        var filters;
+        var sortBy;
+
+        beforeEach(function(){
+            filters = {
+                startswith: 'ch'
+            };
+            sortBy = 'urlname';
+            callback = sandbox.stub();
+
+            users.getUsers(filters, sortBy, callback);
+        });
+
+        it('calls apiRequest.makeRequest once', function(){
+            expect(makeRequestStub.calledOnce).toEqual(true);
+        });
+
+        describe('makeRequest options', function(){
+            var makeRequestOptions;
+
+            beforeEach(function(){
+                makeRequestOptions = makeRequestStub.args[0][0];
+            });
+
+            it('passes an options hash to makeRequest as the first argument', function(){
+                expect(typeof makeRequestOptions).toEqual('object');
+            });
+
+            it('passes the method option as get', function(){
+                expect(makeRequestOptions.method).toEqual('get');
+            });
+
+            it('passes the method url as "/users', function(){
+                expect(makeRequestOptions.url).toEqual('/users');
+            });
+
+            describe('the query string', function(){
+                var queryString;
+
+                beforeEach(function(){
+                    queryString = makeRequestOptions.qs;
+                });
+
+                it('passes the querystring a hash named "qs"', function(){
+                    expect(typeof queryString).toEqual('object');
+                });
+
+                it('passes the filters in the qs hash', function(){
+                    var filterKeys = Object.keys(filters);
+                    filterKeys.forEach(function(key){
+                        expect(queryString[key]).toEqual(filters[key]);
+                    });
+                });
+
+                it('passes the sortBy argument in the qs hash', function(){
+                    expect(queryString.sortBy).toEqual(sortBy);
+                });
+            });
+
+            describe('the callback', function(){
+                it('passes a callback to makeRequest as the second argument', function(){
+                    expect(typeof makeRequestStub.args[0][1]).toEqual('function');
+                });
+
+                describe('when resolved with no errors', function(){
+                    var users;
+
+                    beforeEach(function(){
+                        users = [
+                            {
+                                username: 'cham'
+                            },
+                            {
+                                username: 'chan'
+                            }
+                        ];
+
+                        makeRequestStub.args[0][1](null, users);
+                    });
+
+                    it('executes the callback', function(){
+                        expect(callback.calledOnce).toEqual(true);
+                    });
+
+                    it('passes no errors to the callback', function(){
+                        expect(callback.args[0][0]).toBeFalsey();
+                    });
+                });
+
+                describe('when resolved with an error', function(){
+                    beforeEach(function(){
+                        makeRequestStub.args[0][1](new Error('something went wrong'));
+                    });
+
+                    it('executes the callback', function(){
+                        expect(callback.calledOnce).toEqual(true);
+                    });
+
+                    it('passes the error to the callback', function(){
+                        expect(callback.args[0][0] instanceof Error).toEqual(true);
+                        expect(callback.args[0][0].message).toEqual('something went wrong');
+                    });
+                });
+            });
+        });
+    });
+
 });
