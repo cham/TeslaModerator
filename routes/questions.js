@@ -23,13 +23,14 @@ questionRouteHandlers.renderQuestions = function renderQuestions(req, res){
 questionRouteHandlers.editQuestion = function editQuestion(req, res){
     var body = req.body;
 
-    questions.editQuestion(body.questionid, {
-
+    questions.editQuestion(body.id, {
+        detail: body.detail,
+        enabled: !!body.enabled
     }, function(err){
         if(err){
             return res.sendStatus(400);
         }
-        res.redirect('/questions?highlightid=' + body.questionid);
+        res.redirect('/questions');
     });
 };
 
@@ -37,18 +38,18 @@ questionRouteHandlers.newQuestion = function newQuestion(req, res){
     var body = req.body;
 
     questions.createQuestion({
-
+        detail: body.detail
     }, function(err){
         if(err){
             return res.sendStatus(400);
         }
-        res.redirect('/questions?highlightid=' + body.questionid);
+        res.redirect('/questions');
     });
 };
 
 module.exports = function(router){
     router
         .get('/questions', requireAuthentication, questionRouteHandlers.renderQuestions)
-        .put('/questions', requireAuthentication, questionRouteHandlers.editQuestion)
+        .post('/editquestion', requireAuthentication, questionRouteHandlers.editQuestion)
         .post('/questions', requireAuthentication, questionRouteHandlers.newQuestion);
 };

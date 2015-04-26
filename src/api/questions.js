@@ -3,23 +3,31 @@
 var apiRequest = require('./apiRequest');
 
 function getQuestions(data, callback){
-    console.log('getQuestions', data);
-    callback(null, []);
-    // apiRequest.makeRequest({
-    //     method: 'get',
-    //     url: '/users',
-    //     qs: queryString
-    // }, callback);
+    apiRequest.makeRequest({
+        method: 'get',
+        url: '/questions'
+    }, callback);
 }
 
 function editQuestion(id, data, callback){
-    console.log('editQuestion', id, data);
-    callback(null, {});
+    apiRequest.makeRequest({
+        method: 'put',
+        url: '/questions/' + id,
+        form: {
+            detail: data.detail,
+            enabled: data.enabled
+        }
+    }, callback);
 }
 
 function createQuestion(data, callback){
-    console.log('createQuestion', data);
-    callback(null, {});
+    apiRequest.makeRequest({
+        method: 'post',
+        url: '/questions/',
+        form: {
+            detail: data.detail
+        }
+    }, callback);
 }
 
 exports.getQuestions = getQuestions;

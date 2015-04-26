@@ -27,28 +27,28 @@
 </head>
 <body>
   <h1>Tesla Moderation</h1>
+  <form action="/questions" method="post">
+    <label for="question_detail">Question detail:</form>
+    <textarea id="question_detail" name="detail"></textarea>
+    <button type="submit">Create</button>
+  </form>
+  <br><br><br>
   <table>
     <tr>
       <th>Question text</th>
       <th>Enabled</th>
       <th></th>
     </tr>
-{{#users}}
-    <form action="/questions" method="put">
-      <input type="hidden" name="username" value="{{username}}">
+{{#questions}}
+    <form action="/editquestion" method="post">
+      <input type="hidden" name="id" value="{{_id}}">
       <tr>
-        <td><textarea name="detail">{{detail}}</textarea></td>
+        <td><textarea name="detail" cols="40" rows="5">{{detail}}</textarea></td>
         <td><input type="checkbox" name="enabled" {{#enabled}}checked{{/enabled}}></td>
         <td><button type="submit">Update</button></td>
       </tr>
     </form>
-{{/users}}
+{{/questions}}
   </table>
-  <br><br><br>
-  <form action="/questions" method="post">
-    <label for="question_detail">Question detail:</form>
-    <textarea id="question_detail"></textarea>
-    <button type="submit">Create</button>
-  </form>
 </body>
 </html>
