@@ -3,6 +3,8 @@
 <head>
   <meta charset="utf-8">
   <title>Tesla Moderation</title>
+  <link rel="stylesheet" media="screen" href="/css/normalize.css">
+  <link rel="stylesheet" media="screen" href="/css/moderator.css">
 </head>
 <body>
   <form action="/login" method="post">

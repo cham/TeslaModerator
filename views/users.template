@@ -3,30 +3,11 @@
 <head>
   <meta charset="utf-8">
   <title>Tesla Moderation</title>
-  <style>
-    table {
-      border: 1px solid #999;
-      font-size: 13px;
-    }
-    th {
-      background: #ccc;
-    }
-    td {
-      border: 1px solid #666;
-    }
-    input[type=text] {
-      width: 200px;
-    }
-    input[type=number] {
-      width: 100px;
-    }
-    a {
-      color: #333;
-    }
-  </style>
+  <link rel="stylesheet" media="screen" href="/css/normalize.css">
+  <link rel="stylesheet" media="screen" href="/css/moderator.css">
 </head>
 <body>
-  <h1>Tesla Moderation</h1>
+  <h1><a href="/">Tesla Moderation</a></h1>
   <form action="/users" method="get">
     <p>
       <label>Username starts with:</label>
@@ -57,5 +38,8 @@
     </form>
 {{/users}}
   </table>
+  <form action="/logout" method="post">
+    <button class="submit logout">Logout</button>
+  </form>
 </body>
 </html>
