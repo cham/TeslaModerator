@@ -118,7 +118,17 @@ function approveRegistration(userId, callback){
             apiRequest.makeRequest({
                 method: 'delete',
                 url: '/pendingusers/' + userId
-            }, callback);
+            }, function(err){
+                if(err){
+                    return callback(err);
+                }
+
+                var message = 'Good news! Your application to Yayhooray has been approved!\n\n';
+                message += 'You can now log in at http://www.yayhooray.com as "' + userData.username +'"';
+                message += ', with the password you provided on registration.';
+
+                apiRequest.sendEmail(userData.email, message, callback);
+            });
         });
     });
 }

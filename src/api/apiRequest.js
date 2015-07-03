@@ -67,4 +67,22 @@ function makeRequest(options, callback){
     });
 }
 
+function sendEmail(email, message, callback){
+    request({
+        method: 'post',
+        url: 'http://localhost:3025',
+        form: {
+            message: message,
+            email: email
+        }
+    }, function(err, response){
+        if(response.statusCode === 200){
+            return callback();
+        }
+
+        return callback(new Error('Could not send password reminder email'));
+    });
+}
+
 exports.makeRequest = makeRequest;
+exports.sendEmail = sendEmail;
