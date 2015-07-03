@@ -15,7 +15,7 @@ function requiredChangePasswordOptions(options){
 function changePassword(options, callback){
     requiredChangePasswordOptions(options || {});
 
-    var urlname = encodeURIComponent(options.username.toLowerCase());
+    var urlname = encodeURIComponent(options.username);
 
     apiRequest.makeRequest({
         form: {
