@@ -51,10 +51,44 @@ userRouteHandlers.editUser = function(req, res){
     });
 };
 
+userRouteHandlers.renderApproveRegistrations = function(req, res){
+    users.getPendingUsers(req.query || {}, function(err, json){
+        if(err){
+            return res.sendStatus(400);
+        }
+        res.render('approve-registrations', json);
+    });
+};
+
+userRouteHandlers.approveRegistration = function(req, res){
+    var body = req.body;
+
+    users.approveRegistration(body.userId, function(err){
+        if(err){
+            return res.sendStatus(400);
+        }
+        res.redirect('/approve-registrations');
+    });
+};
+
+userRouteHandlers.denyRegistration = function(req, res){
+    var body = req.body;
+
+    users.denyRegistration(body.userId, function(err){
+        if(err){
+            return res.sendStatus(400);
+        }
+        res.redirect('/approve-registrations');
+    });
+};
+
 module.exports = function(router){
     router
         .get('/change-password', requireAuthentication, userRouteHandlers.renderChangePassword)
         .post('/change-password', requireAuthentication, userRouteHandlers.changePassword)
         .get('/users', requireAuthentication, userRouteHandlers.getUsers)
-        .post('/user', requireAuthentication, userRouteHandlers.editUser);
+        .post('/user', requireAuthentication, userRouteHandlers.editUser)
+        .get('/approve-registrations', requireAuthentication, userRouteHandlers.renderApproveRegistrations)
+        .post('/approve-registration', requireAuthentication, userRouteHandlers.approveRegistration)
+        .post('/deny-registration', requireAuthentication, userRouteHandlers.denyRegistration);
 };

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Tesla Moderation</title>
+  <style>
+    table {
+      border: 1px solid #999;
+      font-size: 13px;
+    }
+    th {
+      background: #ccc;
+    }
+    td {
+      border: 1px solid #666;
+    }
+    input[type=text] {
+      width: 200px;
+    }
+    input[type=number] {
+      width: 100px;
+    }
+    a {
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h1>Tesla Moderation</h1>
+  <form action="/questions" method="post">
+    <label for="question_detail">Question detail:</form>
+    <textarea id="question_detail" name="detail"></textarea>
+    <button type="submit">Create</button>
+  </form>
+  <br><br><br>
+  <table>
+    <tr>
+      <th>Question text</th>
+      <th>Enabled</th>
+      <th></th>
+    </tr>
+{{#questions}}
+    <form action="/editquestion" method="post">
+      <input type="hidden" name="id" value="{{_id}}">
+      <tr>
+        <td><textarea name="detail" cols="40" rows="5">{{detail}}</textarea></td>
+        <td><input type="checkbox" name="enabled" {{#enabled}}checked{{/enabled}}></td>
+        <td><button type="submit">Update</button></td>
+      </tr>
+    </form>
+{{/questions}}
+  </table>
+</body>
+</html>

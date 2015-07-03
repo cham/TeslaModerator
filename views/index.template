@@ -11,6 +11,8 @@
     <!--li><a href="/edit-thread">Search / Edit threads</a></li>
     <li><a href="/edit-post">Search / Edit posts</a></li-->
     <li><a href="/users">Search / Edit users</a></li>
+    <li><a href="/questions">Registration questions</a></li>
+    <li><a href="/approve-registrations">Approve / delete registrations</a></li>
     <!--li><a href="/toggle-registration">Enable / disable registration page</a></li-->
   </ol>
   <form action="/logout" method="post">
