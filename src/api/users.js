@@ -85,6 +85,54 @@ function editUser(username, details, callback){
     async.parallel(callsToMake, callback);
 }
 
+function getPendingUsers(query, callback){
+    apiRequest.makeRequest({
+        method: 'get',
+        url: '/pendingusers'
+    }, callback);
+}
+
+function approveRegistration(userId, callback){
+    apiRequest.makeRequest({
+        method: 'get',
+        url: '/pendingusers/' + userId
+    }, function(err, userData){
+        if(err){
+            return callback(err);
+        }
+
+        apiRequest.makeRequest({
+            method: 'post',
+            url: '/user',
+            form: {
+                username: userData.username,
+                password: userData.password,
+                email: userData.email,
+                ip: userData.ip
+            }
+        }, function(err){
+            if(err){
+                return callback(err);
+            }
+
+            apiRequest.makeRequest({
+                method: 'delete',
+                url: '/pendingusers/' + userId
+            }, callback);
+        });
+    });
+}
+
+function denyRegistration(userId, callback){
+    apiRequest.makeRequest({
+        method: 'delete',
+        url: '/pendingusers/' + userId
+    }, callback);
+}
+
+exports.denyRegistration = denyRegistration;
+exports.approveRegistration = approveRegistration;
+exports.getPendingUsers = getPendingUsers;
 exports.changePassword = changePassword;
 exports.getUsers = getUsers;
 exports.editUser = editUser;

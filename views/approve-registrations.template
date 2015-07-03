@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Tesla Moderation</title>
+  <style>
+    table {
+      border: 1px solid #999;
+      font-size: 13px;
+    }
+    th {
+      background: #ccc;
+    }
+    td {
+      border: 1px solid #666;
+    }
+    input[type=text] {
+      width: 200px;
+    }
+    input[type=number] {
+      width: 100px;
+    }
+    a {
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h1>Tesla Moderation</h1>
+  <table>
+    <tr>
+      <th>Username</th>
+      <th>Email</th>
+      <th>IP</th>
+      <th>Points</th>
+      <th>Answers</th>
+      <th>Other users at this IP</th>
+      <th></th>
+    </tr>
+{{#pendingUsers}}
+      <tr>
+        <td>{{username}}</td>
+        <td>{{email}}</td>
+        <td>{{ip}}</td>
+        <td>{{points}}</td>
+        <td>
+          <h4>{{question1}}</h4>
+          <p>
+            {{answer1}}
+          </p>
+          <h4>{{question2}}</h4>
+          <p>
+            {{answer2}}
+          </p>
+          <h4>{{question3}}</h4>
+          <p>
+            {{answer3}}
+          </p>
+        </td>
+        <td>
+          {{#accountsKnownOnIp}}
+          {{.}},
+          {{/accountsKnownOnIp}}
+        </td>
+        <td>
+          <form action="/approve-registration" method="post">
+            <input type="hidden" name="userId" value="{{_id}}">
+            <button type="submit">Approve</button>
+          </form>
+          <form action="/deny-registration" method="post">
+            <input type="hidden" name="userId" value="{{_id}}">
+            <button type="submit">Delete</button>
+          </form>
+        </td>
+      </tr>
+    </form>
+{{/pendingUsers}}
+  </table>
+</body>
+</html>
