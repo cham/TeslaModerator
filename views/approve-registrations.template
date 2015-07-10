@@ -21,7 +21,11 @@
       <tr>
         <td>{{username}}</td>
         <td>{{email}}</td>
-        <td>{{ip}}</td>
+        <td>
+          {{ip}}
+          <br>
+          <a class="geoip" href="https://geoiptool.com/en/?ip={{ip}}" target="_blank">GeoIP</a>
+        </td>
         <td>{{points}}</td>
         <td>
           <h4>{{question1}}</h4>
