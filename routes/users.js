@@ -65,7 +65,7 @@ userRouteHandlers.approveRegistration = function(req, res){
 
     users.approveRegistration(body.userId, function(err){
         if(err){
-            return res.sendStatus(400);
+            return res.status(400).send(err);
         }
         res.redirect('/approve-registrations');
     });

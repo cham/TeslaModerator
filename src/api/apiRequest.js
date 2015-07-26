@@ -14,13 +14,17 @@ var errorCodeToTextMap = {
     500: 'API error'
 };
 
-function checkResponse(err, apiresponse, callback){
+function checkResponse(err, apiresponse, json, callback){
     if(err){
         return callback(err);
     }
 
     if(apiresponse && errorCodes.indexOf(apiresponse.statusCode) > -1){
-        callback(new Error(apiresponse.body || errorCodeToTextMap[apiresponse.statusCode]));
+        var apiErrorMessage = apiresponse.body || errorCodeToTextMap[apiresponse.statusCode];
+        if(json.error && json.error.message){
+            apiErrorMessage = json.error.message;
+        }
+        callback(new Error(apiErrorMessage));
         return false;
     }
 
@@ -52,7 +56,7 @@ function makeRequest(options, callback){
     options.url = 'http://localhost:3100' + options.url;
 
     request(options, function(err, response, json){
-        if(!checkResponse(err, response, callback)){
+        if(!checkResponse(err, response, json, callback)){
             return;
         }
 
