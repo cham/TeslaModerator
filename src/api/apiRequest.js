@@ -53,7 +53,8 @@ function requiredOptions(options){
 function makeRequest(options, callback){
     requiredOptions(options || {});
 
-    options.url = 'http://localhost:3100' + options.url;
+    const apiUrl = process.env.API_URL || 'http://localhost:3100'
+    options.url = apiUrl + options.url;
 
     request(options, function(err, response, json){
         if(!checkResponse(err, response, json, callback)){
